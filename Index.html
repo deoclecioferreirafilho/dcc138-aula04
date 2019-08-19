@@ -22,9 +22,11 @@
             dt = (t-anterior)/1000;
             ctx.fillStyle = "#0fe";
             ctx.fillRect(0,0, canvas.width, canvas.height);
+           
             pc.mover(dt);
-            pc.desenhar(ctx);
+            pc2.perseguir(pc);
             pc2.mover(dt);
+            pc.desenhar(ctx);
             pc2.desenhar(ctx);
 
             if(pc.colidiuCom(pc2)){

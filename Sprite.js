@@ -40,3 +40,8 @@ Sprite.prototype.colidiuCom = function(alvo){
     return true;
 
 }
+
+Sprite.prototype.perseguir =function(alvo){
+    this.vx = 40*Math.sign(alvo.x - this.x);
+    this.vy = 40*Math.sign(alvo.y - this.y); 
+}
