@@ -33,7 +33,10 @@ Sprite.prototype.mover = function(dt) {
 Sprite.prototype.colidiuCom = function(alvo){
     if(alvo.x + alvo.w < this.x) return false;
     if(alvo.x > this.x + this.w) return false;
-    
+
+    if(alvo.y + alvo.w < this.y) return false;
+    if(alvo.y > this.y + this.w) return false;
+
     return true;
 
 }

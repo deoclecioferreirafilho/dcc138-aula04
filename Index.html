@@ -16,11 +16,11 @@
         var anterior = 0;
         var dt = 0;
         var pc = new Sprite({vx:30});
-        var pc2 = new Sprite({vx:-30, x:100});
+        var pc2 = new Sprite({vx:-30, x:100, y:70});
 
         function passo(t){
             dt = (t-anterior)/1000;
-            ctx.fillStyle = "#0fa";
+            ctx.fillStyle = "#0fe";
             ctx.fillRect(0,0, canvas.width, canvas.height);
             pc.mover(dt);
             pc.desenhar(ctx);
@@ -30,7 +30,7 @@
             if(pc.colidiuCom(pc2)){
                 pc2.x = pc2.x + 50;
             }
-            
+
             anterior = t;
             requestAnimationFrame(passo);
         }
