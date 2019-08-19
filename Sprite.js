@@ -7,3 +7,12 @@ function Sprite() {
     this.vx = 0;
     this.vy = 0;
 }
+
+Sprite.prototype = new Sprite();
+Sprite.constructor = Sprite;
+
+Sprite.prototype.desenhar = function(ctx) {
+    ctx.fillStyle = "blue";
+    ctx.strokeStyle = "black";
+    ctx.fillRect(this.x, this.y, this.w, this.w);
+}

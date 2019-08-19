@@ -11,11 +11,14 @@
     <h1>Semana 03</h1>
     <canvas/>
     <script>
-var canvas = document.querySelector("canvas");
-var ctx = canvas.getContext("2d");
+        var canvas = document.querySelector("canvas");
+        var ctx = canvas.getContext("2d");
+        var pc = new Sprite();
 
-ctx.fillStyle = "tan";
-ctx.fillRect(0,0, canvas.width, canvas.height);
+        ctx.fillStyle = "#0fa";
+        ctx.fillRect(0,0, canvas.width, canvas.height);
+
+        pc.desenhar(ctx);
 
     </script>
 </body>
