@@ -1,14 +1,22 @@
-function Sprite() {
-    this.x = 0;
-    this.y = 0;
+function Sprite(exemplo) {
+    var{
+        x = 10,
+        y = 100,
+        w = 10,
+        vx = 0,
+        vy = 0
+    } = exemplo;
+    
+    this.x = x;
+    this.y = y;
 
-    this.w = 30;
+    this.w = w;
 
-    this.vx = 0;
-    this.vy = 0;
+    this.vx = vx;
+    this.vy = vy;
 }
 
-Sprite.prototype = new Sprite();
+Sprite.prototype = new Sprite({});
 Sprite.constructor = Sprite;
 
 Sprite.prototype.desenhar = function(ctx) {
