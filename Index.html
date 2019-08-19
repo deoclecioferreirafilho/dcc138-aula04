@@ -13,12 +13,20 @@
     <script>
         var canvas = document.querySelector("canvas");
         var ctx = canvas.getContext("2d");
+        var anterior = 0;
+        var dt = 0;
         var pc = new Sprite();
 
-        ctx.fillStyle = "#0fa";
-        ctx.fillRect(0,0, canvas.width, canvas.height);
-
-        pc.desenhar(ctx);
+        function passo(t){
+            dt = (t-anterior)/1000;
+            ctx.fillStyle = "#0fa";
+            ctx.fillRect(0,0, canvas.width, canvas.height);
+            pc.mover(dt);
+            pc.desenhar(ctx);
+            anterior = t;
+            requestAnimationFrame(passo);
+        }
+        requestAnimationFrame(passo);
 
     </script>
 </body>

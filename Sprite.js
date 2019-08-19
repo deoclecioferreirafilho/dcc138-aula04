@@ -16,3 +16,8 @@ Sprite.prototype.desenhar = function(ctx) {
     ctx.strokeStyle = "black";
     ctx.fillRect(this.x, this.y, this.w, this.w);
 }
+
+Sprite.prototype.mover = function(dt) {
+    this.x = this.x + this.vx*dt;
+    this.y = this.y + this.vy*dt;
+}
