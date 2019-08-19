@@ -16,7 +16,7 @@
         var anterior = 0;
         var dt = 0;
         var pc = new Sprite({vx:30});
-        var pc2 = new Sprite({vx:-30, x:100, y:70});
+        var npc = new Sprite({vx:-30, x:100, y:70});
 
         function passo(t){
             dt = (t-anterior)/1000;
@@ -24,13 +24,13 @@
             ctx.fillRect(0,0, canvas.width, canvas.height);
            
             pc.mover(dt);
-            pc2.perseguir(pc);
-            pc2.mover(dt);
+            npc.perseguir(pc);
+            npc.mover(dt);
             pc.desenhar(ctx);
-            pc2.desenhar(ctx);
+            npc.desenhar(ctx);
 
-            if(pc.colidiuCom(pc2)){
-                pc2.x = pc2.x + 50;
+            if(pc.colidiuCom(npc)){
+                npc.x = npc.x + 50;
             }
 
             anterior = t;
