@@ -26,6 +26,14 @@ Sprite.prototype.desenhar = function(ctx) {
 }
 
 Sprite.prototype.mover = function(dt) {
-    this.x = this.x + this.vx*dt;
-    this.y = this.y + this.vy*dt;
+    this.x = this.x + this.vx * dt;
+    this.y = this.y + this.vy * dt;
+}
+
+Sprite.prototype.colidiuCom = function(alvo){
+    if(alvo.x + alvo.w < this.x) return false;
+    if(alvo.x > this.x + this.w) return false;
+    
+    return true;
+
 }
