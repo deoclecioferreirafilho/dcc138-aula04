@@ -5,7 +5,8 @@ function Sprite(exemplo = {}) {
         w = 10,
         vx = 0,
         vy = 0,
-        color = "blue"
+        color = "blue",
+        imune = 0
     } = exemplo;
 
     this.x = x;
@@ -17,6 +18,7 @@ function Sprite(exemplo = {}) {
     this.vy = vy;
 
     this.color = color;
+    this.imune = imune;
 }
 
 Sprite.prototype = new Sprite({});
@@ -25,12 +27,19 @@ Sprite.constructor = Sprite;
 Sprite.prototype.desenhar = function (ctx) {
     ctx.fillStyle = this.color;
     ctx.strokeStyle = "black";
+    if (this.imune > 0) {
+        ctx.globalAlpha = 0.5 * Math.cos(60 * this.imune);
+    }
     ctx.fillRect(this.x, this.y, this.w, this.w);
+    ctx.globalAlpha = 1.0;
 }
 
 Sprite.prototype.mover = function (dt) {
     this.x = this.x + this.vx * dt;
     this.y = this.y + this.vy * dt;
+    if (this, this.imune > 0) {
+        this.imune = this.imune - 1 * dt;
+    }
 }
 
 Sprite.prototype.colidiuCom = function (alvo) {
@@ -45,8 +54,8 @@ Sprite.prototype.colidiuCom = function (alvo) {
 }
 
 Sprite.prototype.perseguir = function (opcoes) {
-    this.vx = 40 * Math.sign(opcoes.alvo.x - this.x);
-    this.vy = 40 * Math.sign(opcoes.alvo.y - this.y);
+    this.vx = 30 * Math.sign(opcoes.alvo.x - this.x);
+    this.vy = 30 * Math.sign(opcoes.alvo.y - this.y);
 }
 
 Sprite.prototype.controlePorTeclas = function (opcoes) {
@@ -57,5 +66,5 @@ Sprite.prototype.controlePorTeclas = function (opcoes) {
     if (opcoes.teclas.cima) { this.vy = -50; }
     if (opcoes.teclas.baixo) { this.vy = 50; }
     if (!opcoes.teclas.cima && !opcoes.teclas.baixo)
-    this.vy = 0;
+        this.vy = 0;
 }

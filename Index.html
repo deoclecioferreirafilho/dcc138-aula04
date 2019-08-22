@@ -19,7 +19,8 @@
         var dt = 0;
         var pc = new Sprite({ vx: 10 });
         var npc = [];
-        var NNPC = 10;
+        var NNPC = 1;
+        var pontos = 1000;
         var teclas = {
             esquerda: 0,
             cima: 0,
@@ -42,7 +43,7 @@
 
         function passo(t) {
             dt = (t - anterior) / 1000;
-            ctx.fillStyle = "#0fe";
+            ctx.fillStyle = "#dfa";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             pc.controlePorTeclas({ teclas: teclas });
             pc.mover(dt);
@@ -53,11 +54,19 @@
             pc.desenhar(ctx);
             for (var i = 0; i < npc.length; i++) {
                 npc[i].desenhar(ctx);
-                if (pc.colidiuCom(npc[i])) {
+                if (pc.imune <= 0 && pc.colidiuCom(npc[i])) {
                     npc[i].x = npc[i].x + Math.random() * canvas.width;
                     npc[i].y = npc[i].y + Math.random() * canvas.height;
+                    pontos --;
+                    pc.imune = 2;
                 }
             }
+            ctx.fillStyle = "yellow";
+            ctx.strokeStyle = "red";
+            ctx.font = "15px bold monospaced";
+            ctx.fillText(pontos, 10, 20);
+            ctx.strokeText(pontos, 10,20);
+
             anterior = t;
             requestAnimationFrame(passo);
         }
