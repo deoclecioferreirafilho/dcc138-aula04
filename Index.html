@@ -1,55 +1,108 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Exercicio01</title>
-    <script src = "./Sprite.js"></script>
+    <script src="./Sprite.js"></script>
 </head>
+
 <body>
     <h1>Semana 03</h1>
-    <canvas/>
+    <canvas />
     <script>
         var canvas = document.querySelector("canvas");
         var ctx = canvas.getContext("2d");
         var anterior = 0;
         var dt = 0;
-        var pc = new Sprite({vx:10});
+        var pc = new Sprite({ vx: 10 });
         var npc = [];
         var NNPC = 10;
-
-        for(var i = 0; i < NNPC; i++){
-            npc[i] = new Sprite({ x: Math.random() * canvas.width,
-                                  y: Math.random() * canvas.height,
-                                  color: "red"
-            
-                                });
+        var teclas = {
+            esquerda: 0,
+            cima: 0,
+            direita: 0,
+            baixo: 0
         }
 
-        function passo(t){
-            dt = (t-anterior)/1000;
+        //Geração dos NPCs
+
+        for (var i = 0; i < NNPC; i++) {
+            npc[i] = new Sprite({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                color: "red"
+
+            });
+        }
+
+        //Passo de animação
+
+        function passo(t) {
+            dt = (t - anterior) / 1000;
             ctx.fillStyle = "#0fe";
-            ctx.fillRect(0,0, canvas.width, canvas.height);
-           
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            pc.controlePorTeclas({ teclas: teclas });
             pc.mover(dt);
-            for(var i = 0; i < npc.length; i++){
-            npc[i].perseguir(pc);
-            npc[i].mover(dt);
+            for (var i = 0; i < npc.length; i++) {
+                npc[i].perseguir({ alvo: pc });
+                npc[i].mover(dt);
             }
             pc.desenhar(ctx);
-            for(var i = 0; i < npc.length; i++){
-            npc[i].desenhar(ctx);
-            if(pc.colidiuCom(npc[i])){
-                npc[i].x = npc[i].x + Math.random() * canvas.width;
-                npc[i].y = npc[i].y + Math.random() * canvas.height;
+            for (var i = 0; i < npc.length; i++) {
+                npc[i].desenhar(ctx);
+                if (pc.colidiuCom(npc[i])) {
+                    npc[i].x = npc[i].x + Math.random() * canvas.width;
+                    npc[i].y = npc[i].y + Math.random() * canvas.height;
+                }
             }
-        }
             anterior = t;
             requestAnimationFrame(passo);
         }
         requestAnimationFrame(passo);
 
+        //Configura controles
+        addEventListener("keydown", function (e) {
+            switch (e.keyCode) {
+                case 37:
+                    teclas.esquerda = 1;
+                    break;
+                case 38:
+                    teclas.cima = 1;
+                    break;
+                case 39:
+                    teclas.direita = 1;
+                    break;
+                case 40:
+                    teclas.baixo = 1;
+                    break;
+                default:
+                    break;
+            }
+
+        });addEventListener("keyup", function (e) {
+            switch (e.keyCode) {
+                case 37:
+                    teclas.esquerda = 0;
+                    break;
+                case 38:
+                    teclas.cima = 0;
+                    break;
+                case 39:
+                    teclas.direita = 0;
+                    break;
+                case 40:
+                    teclas.baixo = 0;
+                    break;
+                default:
+                    break;
+            }
+
+        });
+
     </script>
 </body>
+
 </html>
