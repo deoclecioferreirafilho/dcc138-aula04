@@ -6,7 +6,8 @@ function Sprite(exemplo = {}) {
         vx = 0,
         vy = 0,
         color = "blue",
-        imune = 0
+        imune = 0,
+        atirando = 0
     } = exemplo;
 
     this.x = x;
@@ -19,6 +20,7 @@ function Sprite(exemplo = {}) {
 
     this.color = color;
     this.imune = imune;
+    this.atirando = atirando;
 }
 
 Sprite.prototype = new Sprite({});
@@ -39,6 +41,9 @@ Sprite.prototype.mover = function (dt) {
     this.y = this.y + this.vy * dt;
     if (this, this.imune > 0) {
         this.imune = this.imune - 1 * dt;
+    }
+    if (this, this.atirando> 0) {
+        this.atirando = this.atirando - 1 * dt;
     }
 }
 

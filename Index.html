@@ -19,9 +19,11 @@
         var dt = 0;
         var pc = new Sprite({ vx: 10 });
         var npc = [];
-        var NNPC = 1;
+        var NNPC = 3;
+        var tiros =[];      
         var pontos = 1000;
         var teclas = {
+            espaco: 0,
             esquerda: 0,
             cima: 0,
             direita: 0,
@@ -45,27 +47,53 @@
             dt = (t - anterior) / 1000;
             ctx.fillStyle = "#dfa";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (teclas.espaco && pc.atirando <= 0) {
+                var tiro = new Sprite({
+                    x: pc.x,
+                    y: pc.y,
+                    w: 5,
+                    vx: 200,
+                    color: "black"
+                });
+                tiros.push(tiro);
+                pc.atirando = 1 / 3;
+            }
+
+
             pc.controlePorTeclas({ teclas: teclas });
             pc.mover(dt);
             for (var i = 0; i < npc.length; i++) {
                 npc[i].perseguir({ alvo: pc });
                 npc[i].mover(dt);
             }
+
+            for (var i = 0; i < tiros.length; i++) {
+                tiros[i].mover(dt);
+            }
+
+
+
             pc.desenhar(ctx);
             for (var i = 0; i < npc.length; i++) {
                 npc[i].desenhar(ctx);
                 if (pc.imune <= 0 && pc.colidiuCom(npc[i])) {
                     npc[i].x = npc[i].x + Math.random() * canvas.width;
                     npc[i].y = npc[i].y + Math.random() * canvas.height;
-                    pontos --;
+                    pontos--;
                     pc.imune = 2;
                 }
             }
+            for (var i = 0; i < tiros.length; i++)
+                tiros[i].desenhar(ctx);
+
+
+
             ctx.fillStyle = "yellow";
             ctx.strokeStyle = "red";
             ctx.font = "15px bold monospaced";
             ctx.fillText(pontos, 10, 20);
-            ctx.strokeText(pontos, 10,20);
+            ctx.strokeText(pontos, 10, 20);
 
             anterior = t;
             requestAnimationFrame(passo);
@@ -75,6 +103,9 @@
         //Configura controles
         addEventListener("keydown", function (e) {
             switch (e.keyCode) {
+                case 32:
+                    teclas.espaco = 1;
+                    break;
                 case 37:
                     teclas.esquerda = 1;
                     break;
@@ -91,8 +122,11 @@
                     break;
             }
 
-        });addEventListener("keyup", function (e) {
+        }); addEventListener("keyup", function (e) {
             switch (e.keyCode) {
+                case 32:
+                    teclas.espaco = 0;
+                    break;
                 case 37:
                     teclas.esquerda = 0;
                     break;
